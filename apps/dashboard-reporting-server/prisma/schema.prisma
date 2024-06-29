@@ -1,0 +1,17 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Rapport {
+  contenu     Json?
+  createdAt   DateTime  @default(now())
+  dateRapport DateTime?
+  id          String    @id @default(cuid())
+  typeRapport String?
+  updatedAt   DateTime  @updatedAt
+}
