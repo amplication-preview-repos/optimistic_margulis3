@@ -1,0 +1,25 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model TemplateNotification {
+  createdAt     DateTime       @default(now())
+  id            String         @id @default(cuid())
+  notifications Notification[]
+  updatedAt     DateTime       @updatedAt
+}
+
+model Notification {
+  createdAt              DateTime              @default(now())
+  id                     String                @id @default(cuid())
+  statut                 String?
+  templateNotification   TemplateNotification? @relation(fields: [templateNotificationId], references: [id])
+  templateNotificationId String?
+  updatedAt              DateTime              @updatedAt
+  utilisateur            String?
+}
