@@ -1,0 +1,94 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Entreprise {
+  adressesLivraison  Json?
+  createdAt          DateTime @default(now())
+  id                 String   @id @default(cuid())
+  logo               Json?
+  margeDette         Float?
+  nom                String?
+  signatureNumerique String?
+  soldeClient        Float?
+  updatedAt          DateTime @updatedAt
+}
+
+model Utilisateur {
+  adressesLivraison Json?
+  compagnie         String?
+  createdAt         DateTime @default(now())
+  email             String?
+  id                String   @id @default(cuid())
+  motDePasse        String?
+  nom               String?
+  profil            String?
+  updatedAt         DateTime @updatedAt
+}
+
+model Produit {
+  caracteristiques         Json?
+  categorieProduit         CategorieProduit?       @relation(fields: [categorieProduitId], references: [id])
+  categorieProduitId       String?
+  conditionnementProduit   ConditionnementProduit? @relation(fields: [conditionnementProduitId], references: [id])
+  conditionnementProduitId String?
+  createdAt                DateTime                @default(now())
+  description              String?
+  id                       String                  @id @default(cuid())
+  image                    Json?
+  nom                      String?
+  nomenclature             String?
+  referenceErp             String?
+  updatedAt                DateTime                @updatedAt
+}
+
+model CategorieProduit {
+  createdAt DateTime  @default(now())
+  id        String    @id @default(cuid())
+  produits  Produit[]
+  updatedAt DateTime  @updatedAt
+}
+
+model ConditionnementProduit {
+  createdAt DateTime  @default(now())
+  id        String    @id @default(cuid())
+  produits  Produit[]
+  updatedAt DateTime  @updatedAt
+}
+
+model PointAchat {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model UniteProduit {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  libelle   String?
+  symbole   String?
+  updatedAt DateTime @updatedAt
+}
+
+model Reclamation {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Commande {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model OffrePrix {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
